@@ -5,12 +5,12 @@ This script helps you calculate a mnemonic seed using a coin, a dice or whatever
 
 Follow the instructions and it will prints you the words that form your mnemonic seed.
 
+![immagine](https://github.com/daniele2010/kotoba/assets/1244534/80234177-a641-40b1-8108-0f9851015a5b)
 
 The english wordlist is embedded in base64 in the script, you can verify the SHA256 hash using the original wordlist:
 ```
 https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt
 ```
-
 This table shows how number of faces, base and number of throws are related.
 
 | 1024 | 512  | 256  | 128  |  64  |  32  |  16  |  8   |  4   |  2   |  1   | total | faces | base | throws |
