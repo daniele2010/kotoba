@@ -20,14 +20,19 @@ def calculate_mnemonics(nwords: int) -> tuple:
 def get_word_value(throws: int, base: int, max_valid: int) -> int:
     word_value = 0
     for t in range(throws):
-        if t == 0:
-            print(f'First throw, valid faces: {list(range(1, max_valid + 2))}')
-        else:
-            print(f'Valid faces: {list(range(1, base + 1))}')
-        throw = int(input(f'Insert throw {t + 1} result: ') or 0) - 1
-        if (throw < 0 or throw >= base) or (t == 0 and (throw < 0 or throw > max_valid)):
-            raise IndexError
-        word_value += throw * base**(throws - t - 1)
+        while True:
+            try:
+                if t == 0:
+                    print(f'First throw, valid faces: {list(range(1, max_valid + 2))}')
+                else:
+                    print(f'Valid faces: {list(range(1, base + 1))}')
+                throw_input = int(input(f'Insert throw {t + 1} result: ') or 0) - 1
+                if (throw_input < 0 or throw_input >= base) or (t == 0 and (throw_input < 0 or throw_input > max_valid)):
+                    raise IndexError
+                word_value += throw_input * (base ** (throws - t - 1))
+                break
+            except (IndexError, ValueError):
+                print("Invalid input. Please try again.")
     return word_value
 
 def generate_mnemonic(wordlist: list) -> str:
@@ -62,7 +67,7 @@ def generate_mnemonic(wordlist: list) -> str:
     checksum_calculated = bin(int(hashlib.sha256(int(entropy_bits,2).to_bytes((len(entropy_bits)+7)//8,'big')).hexdigest(),16))[2:].zfill(256)[:checksum_length]
     last_word = int(all_words[-11:-checksum_length] + checksum_calculated, 2)
     words[-1] = last_word
-    print(f'Word n. {nwords}: {wordlist[last_word]}\n')
+    print(f'Word n. {nwords}: {wordlist[last_word]} (checksum)\n')
     mnemonic = ' '.join([wordlist[word] for word in words])
     return mnemonic
 
